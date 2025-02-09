@@ -7,7 +7,9 @@
   border-bottom: 1px solid #ddd;
 }
 
-.header-left, .header-center, .header-right {
+.header-left,
+.header-center,
+.header-right {
   display: flex;
   align-items: center;
 }
@@ -15,7 +17,7 @@
 .header-button {
   background: none;
   border: none;
-  color: #007aff;
+  color: var(--main-color);
   font-size: 16px;
   cursor: pointer;
 }

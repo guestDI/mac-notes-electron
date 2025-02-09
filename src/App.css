@@ -4,18 +4,27 @@ body {
   color: black;
 }
 
+.form-control {
+  border: none;
+  outline: none;
+}
+
+.form-control:focus {
+  outline: none;
+  max-width: 98%;
+}
+
+.folder-group {
+  list-style-type: none;
+}
+
 .sidebar {
   height: 100vh;
   border-right: 1px solid #ddd;
 }
 
-.list-group-item {
-  cursor: pointer;
-}
-
 .list-group-item.active {
-  background-color: #007bff;
-  color: white;
+  background-color: #1e1e1e;
 }
 
 /* Dark mode */
@@ -35,15 +44,23 @@ body {
   border-color: #333;
 }
 
-.dark-mode .list-group-item.active {
-  background-color: #007bff;
-  color: white;
+.list-group-item.active {
+  background-color: var(--main-color-light);
+  color: inherit;
 }
 
 .dark-mode textarea {
   background-color: #1e1e1e;
   color: #ffffff;
-  border-color: #333;
+  border: none;
+  outline: none;
+}
+
+.dark-mode textarea:focus {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #1e1e1e;
+  outline: none;
 }
 
 .dark-mode .btn-secondary {
