@@ -1,0 +1,58 @@
+/* Light mode (default) */
+body {
+  background-color: white;
+  color: black;
+}
+
+.sidebar {
+  height: 100vh;
+  border-right: 1px solid #ddd;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Dark mode */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .sidebar {
+  background-color: #1e1e1e;
+  border-right: 1px solid #333;
+}
+
+.dark-mode .list-group-item {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #333;
+}
+
+.dark-mode .list-group-item.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.dark-mode textarea {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #333;
+}
+
+.dark-mode .btn-secondary {
+  background-color: #333;
+  border-color: #444;
+  color: #fff;
+}
+
+.dark-mode .btn-secondary:hover {
+  background-color: #444;
+  border-color: #555;
+}
