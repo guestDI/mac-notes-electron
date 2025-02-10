@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
   --main-color: #e17f36;
   --main-color-light: rgba(239, 112, 16, 0.48);
+  --bg-header: rgba(78, 76, 74, 0.82);
 }
 
 a {

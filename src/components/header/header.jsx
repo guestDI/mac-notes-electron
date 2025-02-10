@@ -4,7 +4,7 @@ import './header.css';
 
 const Header = ({ addNewNote, toggleDarkMode, darkMode }) => {
   return (
-    <header className="header">
+    <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
       <div className="header-left">
         <button className="header-button" onClick={addNewNote}>
           <FaEdit />

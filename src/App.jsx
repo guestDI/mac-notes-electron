@@ -3,8 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/header/header.jsx';
 import Folder from './components/folder/folder.jsx';
+import { FaBorderAll, FaFolder, FaListUl, FaTrashAlt } from 'react-icons/fa';
+import { FaPlusCircle } from "react-icons/fa";
+import NoteItem from './components/noteItem/noteItem.jsx';
 
-const folders = [
+const mockedFolders = [
   { id: 1, name: 'Notes', count: 3 },
   { id: 2, name: 'Dev Notes', count: 5 },
   { id: 3, name: 'Personal', count: 2 },
@@ -12,6 +15,7 @@ const folders = [
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [folders, setFolders] = useState(mockedFolders);
   const [activeNote, setActiveNote] = useState(null);
   const [noteContent, setNoteContent] = useState('');
   const [darkMode, setDarkMode] = useState(false);
@@ -69,38 +73,40 @@ function App() {
     <div className={`container-fluid ${darkMode ? 'dark-mode' : ''}`}>
       <div className="row">
         {/* Folders Sidebar */}
-        <div className={`col-md-2 sidebar ${darkMode ? 'dark-mode' : ''}`}>
-          <ul className="list-group folder-group mt-3">
-            {folders.map((folder) => (
-              <Folder key={folder.id} folder={folder} darkMode={darkMode}/>
-            ))}
-          </ul>
+        <div className={`col-md-2 sidebar folders-sidebar ${darkMode ? 'dark-mode' : ''}`}>
+          <div>
+            <button className="btn folder-btn">
+              <FaFolder />
+            </button>
+            <ul className="list-group folder-group mt-3" >
+              {folders.map((folder) => (
+                <Folder key={folder.id} folder={folder} darkMode={darkMode} />
+              ))}
+            </ul>
+          </div>
+          <button className={'btn new-folder-btn'}>
+            <FaPlusCircle /> New folder
+          </button>
         </div>
 
         {/* Notes Sidebar */}
         <div className={`col-md-2 sidebar ${darkMode ? 'dark-mode' : ''}`}>
+          <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
+            <div className="flex-row">
+              <button className="btn">
+                <FaListUl />
+              </button>
+              <button className="btn">
+                <FaBorderAll />
+              </button>
+            </div>
+          </header>
           <ul className="list-group mt-3">
             {notes.map((note) => (
-              <li
-                key={note.id}
-                className={`list-group-item ${
-                  activeNote === note.id ? 'active' : ''
-                } ${darkMode ? 'dark-mode' : ''}`}
-                onClick={() => handleNoteClick(note.id)}
-              >
-                {note.title}
-                <button
-                  className="btn btn-danger btn-sm float-end"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteNote(note.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
+              <NoteItem key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
+                          deleteNote={deleteNote} darkMode={darkMode} />
+              ))}
+            </ul>
         </div>
 
         {/* Main Content */}

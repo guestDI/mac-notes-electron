@@ -4,6 +4,35 @@ body {
   color: black;
 }
 
+.folder-btn {
+  padding: 1em 0 0;
+}
+
+.folder-btn > svg {
+  font-size: 1.2em;
+  color: var(--main-color);
+}
+
+.folder-btn > svg:hover {
+  color: var(--main-color-light);
+}
+
+.folders-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.new-folder-btn {
+  font-size: 0.8em;
+  padding-left: 0;
+}
+
+.new-folder-btn > svg {
+  color: var(--main-color);
+}
+
 .form-control {
   border: none;
   outline: none;
@@ -29,7 +58,7 @@ body {
 
 /* Dark mode */
 .dark-mode {
-  background-color: #121212;
+  background-color: #1e1e1e;
   color: #ffffff;
 }
 
@@ -72,4 +101,8 @@ body {
 .dark-mode .btn-secondary:hover {
   background-color: #444;
   border-color: #555;
+}
+
+.dark-mode .new-folder-btn {
+  color: #fff;
 }

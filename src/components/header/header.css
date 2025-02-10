@@ -32,3 +32,8 @@
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+
+.dark-mode .header {
+  background: var(--bg-header);
+  border-bottom: var(--bg-header);
+}
