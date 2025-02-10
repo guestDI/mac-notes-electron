@@ -1,5 +1,6 @@
 import { FaTrashAlt } from 'react-icons/fa';
 import PropTypes from 'prop-types';
+import './noteItem.css'
 
 const NoteItem = ({ note, handleNoteClick, deleteNote, isActive, darkMode}) => {
   const handleClick = () => {
@@ -13,14 +14,14 @@ const NoteItem = ({ note, handleNoteClick, deleteNote, isActive, darkMode}) => {
 
   return (
     <li
-      className={`list-group-item ${
+      className={`note-item ${
         isActive ? 'active' : ''
       } ${darkMode ? 'dark-mode' : ''}`}
       onClick={handleClick}
     >
       {note.title}
       <button
-        className="btn btn-sm float-end"
+        className="btn btn-sm float-end delete-btn"
         onClick={handleDelete}
       >
         <FaTrashAlt />

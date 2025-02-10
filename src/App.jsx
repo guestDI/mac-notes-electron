@@ -78,11 +78,13 @@ function App() {
             <button className="btn folder-btn">
               <FaFolder />
             </button>
-            <ul className="list-group folder-group mt-3" >
-              {folders.map((folder) => (
-                <Folder key={folder.id} folder={folder} darkMode={darkMode} />
-              ))}
-            </ul>
+            <div>
+              <ul className="list-group folder-group mt-3">
+                {folders.map((folder) => (
+                  <Folder key={folder.id} folder={folder} darkMode={darkMode} />
+                ))}
+              </ul>
+            </div>
           </div>
           <button className={'btn new-folder-btn'}>
             <FaPlusCircle /> New folder
@@ -90,18 +92,18 @@ function App() {
         </div>
 
         {/* Notes Sidebar */}
-        <div className={`col-md-2 sidebar ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`col-md-2 sidebar px-0 ${darkMode ? 'dark-mode' : ''}`}>
           <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
             <div className="flex-row">
-              <button className="btn">
+              <button className="btn header-button">
                 <FaListUl />
               </button>
-              <button className="btn">
+              <button className="btn header-button">
                 <FaBorderAll />
               </button>
             </div>
           </header>
-          <ul className="list-group mt-3">
+          <ul className="list-group list-unstyled mt-3 mx-2">
             {notes.map((note) => (
               <NoteItem key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
                           deleteNote={deleteNote} darkMode={darkMode} />

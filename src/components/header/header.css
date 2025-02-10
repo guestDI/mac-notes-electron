@@ -2,9 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 0.5em 0.5em;
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
+  height: 3.5em;
 }
 
 .header-left,
@@ -23,7 +24,17 @@
 }
 
 .header-button:hover {
-  text-decoration: underline;
+  color: var(--main-color-light);
+}
+
+.select-btn {
+  background: var(--main-color);
+  font-size: 0.8em;
+  padding: 0.2em 0.4em;
+}
+
+.select-btn:hover {
+  background: var(--main-color-light);
 }
 
 .header-search {

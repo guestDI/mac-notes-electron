@@ -9,13 +9,17 @@ const Header = ({ addNewNote, toggleDarkMode, darkMode }) => {
         <button className="header-button" onClick={addNewNote}>
           <FaEdit />
         </button>
+        <button className='rounded-pill select-btn'>
+          Select
+        </button>
       </div>
-      <div className="header-center"></div>
+      <div className="header-center">
+      </div>
       <div className="header-right">
         <button className="header-button">
           <FaRegShareSquare />
         </button>
-        <input type="text" className="header-search" placeholder="Search" />
+        {/*<input type="text" className="header-search" placeholder="Search" />*/}
         <button
           className="header-button"
           onClick={toggleDarkMode}
