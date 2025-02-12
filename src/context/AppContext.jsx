@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 
-const AppContext = createContext([]);
+const AppContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
 const AppProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
+  const [view, setView] = useState('list');
 
   useEffect(() => {
     const isDarkMode = JSON.parse(localStorage.getItem('isDarkMode')) || false;
@@ -15,10 +16,16 @@ const AppProvider = ({ children }) => {
     setDarkMode((prevState) => !prevState)
   }
 
+  const toggleView = () => {
+    setView((prevState) => prevState === 'list' ? 'grid' : 'list')
+  }
+
   return (
     <AppContext value={{
       darkMode,
-      toggleDarkMode
+      view,
+      toggleDarkMode,
+      toggleView
     }}>
       {children}
     </AppContext>

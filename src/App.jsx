@@ -8,6 +8,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import NoteItem from './components/noteItem/noteItem.jsx';
 import { NotesContext } from './context/NotesContext.jsx';
 import Modal from './components/modal/modal.jsx';
+import { AppContext } from './context/AppContext.jsx';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,9 +27,18 @@ function App() {
     updateNote,
     setActiveNoteById,
     getActiveNoteContent,
-    addFolder
+    addFolder,
+    activeFolder,
+    setActiveFolderById,
     // getActiveNoteDrawing,
   } = use(NotesContext);
+
+  const {
+    view,
+    toggleView
+  } = use(AppContext);
+
+  console.log('aa',view)
 
   // Load notes from localStorage on startup
   useEffect(() => {
@@ -86,24 +96,26 @@ function App() {
   }, [darkMode]) ;
 
   const handleNoteClick = (id) => {
-    const note = notes.find((note) => note.id === id);
     setActiveNoteById(id);
-    setNoteContent(note.content);
+    // setNoteContent(note.content);
   };
 
-  const handleShare = () => {
+  const handleFolderClick = (id) => {
+    setActiveFolderById(id)
+  };
+
+  const handleShare = useCallback(() => {
     // Use the exposed Electron API to trigger the sharing menu
     if (window.electron) {
       window.electron.showShareMenu();
     } else {
       alert('Sharing is not supported in this environment.');
     }
-  };
+  }, []) ;
 
   const handleAddFolder = useCallback((name) => {
     addFolder(name)
   }, [addFolder])
-
 
   return (
     <>
@@ -118,7 +130,8 @@ function App() {
               <div>
                 <ul className="list-group folder-group mt-3">
                   {folders.map((folder) => (
-                    <Folder key={folder.id} folder={folder} darkMode={darkMode} />
+                    <Folder key={folder.id} folder={folder} isActive={folder.id === activeFolder}
+                            darkMode={darkMode} handleFolderClick={handleFolderClick}/>
                   ))}
                 </ul>
               </div>
@@ -132,10 +145,10 @@ function App() {
           <div className={`col-md-2 sidebar px-0 ${darkMode ? 'dark-mode' : ''}`}>
             <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
               <div className="flex-row">
-                <button className="btn header-button">
+                <button className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`} onClick={toggleView}>
                   <FaListUl />
                 </button>
-                <button className="btn header-button">
+                <button className={`btn header-button ${view === 'list' ? 'secondary' : ''}`} onClick={toggleView}>
                   <FaBorderAll />
                 </button>
               </div>
@@ -151,21 +164,27 @@ function App() {
           {/* Main Content */}
           <div className="col-md-8 px-0">
             <Header addNewNote={addNote} shareNote={handleShare} toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
-            {activeNote ? (
-              <textarea
-                className={`form-control mt-3 shadow-none ${darkMode ? 'dark-mode' : ''}`}
-                rows="20"
-                value={getActiveNoteContent()}
-                onChange={(e) => {
-                  setNoteContent(e.target.value);
-                  updateNote(activeNote, e.target.value);
-                }}
-              />
-            ) : (
-              <div
-                className={`text-center mt-5 ${darkMode ? 'dark-mode' : ''}`}
-              ></div>
-            )}
+            {view === 'list' ?
+            <>
+              {activeNote ? (
+                <textarea
+                  className={`form-control mt-3 shadow-none ${darkMode ? 'dark-mode' : ''}`}
+                  rows="20"
+                  value={getActiveNoteContent()}
+                  onChange={(e) => {
+                    setNoteContent(e.target.value);
+                    updateNote(activeNote, e.target.value);
+                  }}
+                />
+              ) : (
+                <div
+                  className={`text-center mt-5 ${darkMode ? 'dark-mode' : ''}`}
+                ></div>
+              )}
+            </> : <div>
+                Grid
+              </div>
+            }
           </div>
         </div>
 

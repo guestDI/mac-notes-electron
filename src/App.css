@@ -55,6 +55,10 @@ body {
   list-style-type: none;
 }
 
+.secondary > svg {
+  color: #8e8d8d;
+}
+
 .sidebar {
   height: 100vh;
   border-right: 1px solid #ddd;

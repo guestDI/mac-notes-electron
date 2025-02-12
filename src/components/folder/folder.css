@@ -9,6 +9,17 @@
     margin-right: 0.4em;
 }
 
+.list-folder-item.active, .dark-mode.list-folder-item.active {
+    background: var(--main-color);
+    color: #fff;
+    padding: 0.2em 0.4em;
+    border-radius: 0.5em;
+}
+
+.list-folder-item.active > svg {
+    color: #fff;
+}
+
 .dark-mode .list-folder-item {
     background-color: #1e1e1e;
     color: #ffffff;
