@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { FaEdit, FaRegShareSquare, FaRegMoon, FaSun } from 'react-icons/fa';
 import './header.css';
 
-const Header = ({ addNewNote, toggleDarkMode, darkMode }) => {
+const Header = ({ addNewNote, toggleDarkMode, darkMode, shareNote }) => {
   return (
     <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
       <div className="header-left">
@@ -16,7 +16,7 @@ const Header = ({ addNewNote, toggleDarkMode, darkMode }) => {
       <div className="header-center">
       </div>
       <div className="header-right">
-        <button className="header-button">
+        <button className="header-button" onClick={shareNote}>
           <FaRegShareSquare />
         </button>
         {/*<input type="text" className="header-search" placeholder="Search" />*/}
@@ -34,6 +34,7 @@ const Header = ({ addNewNote, toggleDarkMode, darkMode }) => {
 Header.propTypes = {
   addNewNote: PropTypes.func.isRequired,
   toggleDarkMode: PropTypes.func.isRequired,
+  shareNote: PropTypes.func.isRequired,
   darkMode: PropTypes.bool.isRequired
 };
 

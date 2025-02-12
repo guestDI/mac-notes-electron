@@ -1,10 +1,19 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import { v4 } from 'uuid';
+
+const mockedFolders = [
+  { id: 1, name: 'Notes', count: 3 },
+  { id: 2, name: 'Dev Notes', count: 5 },
+  { id: 3, name: 'Personal', count: 2 },
+];
 
 const NotesContext = createContext([]);
 
+// eslint-disable-next-line react/prop-types
 const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
+  const [folders, setFolders] = useState(mockedFolders);
 
   // Load notes from localStorage on startup
   useEffect(() => {
@@ -64,9 +73,19 @@ const NotesProvider = ({ children }) => {
     return note ? note.drawing : null;
   };
 
+  const addFolder = (folderName) => {
+    const newFolder = {
+      id: v4(),
+      name: folderName,
+      count: 0
+    }
+    setFolders((prevState) => [...prevState, newFolder])
+  }
+
   return (
     <NotesContext
       value={{
+        folders,
         notes,
         activeNote,
         addNote,
@@ -75,12 +94,15 @@ const NotesProvider = ({ children }) => {
         setActiveNoteById,
         getActiveNoteContent,
         getActiveNoteDrawing,
+        addFolder
       }}
     >
       {children}
     </NotesContext>
   );
 };
+
+
 
 // export const useNotes = () => useContext(NotesContext);
 export { NotesContext, NotesProvider };

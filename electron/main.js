@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, ipcMain, nativeTheme } from 'electron';
+import { app, BrowserWindow, Menu, ipcMain, nativeTheme, ShareMenu } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -19,6 +19,28 @@ function createWindow () {
     });
 
     mainWindow.loadURL('http://localhost:5173');
+
+    const shareMenu = new ShareMenu({
+        text: 'Check out this awesome app!',
+        url: 'https://www.electronjs.org/',
+    });
+
+    // Attach the sharing menu to the app
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate([
+          {
+              label: 'Share',
+              submenu: [
+                  {
+                      label: 'Share via...',
+                      click: () => {
+                          shareMenu.popup({ window: mainWindow });
+                      },
+                  },
+              ],
+          },
+      ])
+    );
 }
 
 const dockMenu = Menu.buildFromTemplate([
@@ -53,6 +75,15 @@ app.whenReady().then(() => {
         app.dock.setMenu(dockMenu)
     }
 }).then(createWindow)
+
+
+ipcMain.on('show-share-menu', () => {
+    const shareMenu = new ShareMenu({
+        text: 'Check out this awesome app!',
+        url: 'https://www.electronjs.org/',
+    });
+    shareMenu.popup({ window: mainWindow });
+});
 
 app.on('window-all-closed', () => {
     // eslint-disable-next-line no-undef

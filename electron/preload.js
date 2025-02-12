@@ -5,4 +5,8 @@ contextBridge.exposeInMainWorld('electron', {
     getSystemTheme: () => ipcRenderer.invoke('get-system-theme'),
     onSystemThemeChanged: (callback) =>
         ipcRenderer.on('system-theme-changed', callback),
+    showShareMenu: () => ipcRenderer.send('show-share-menu'),
+    send: (channel, data) => ipcRenderer.send(channel, data),
+    on: (channel, func) =>
+      ipcRenderer.on(channel, (event, ...args) => func(...args)),
 });
