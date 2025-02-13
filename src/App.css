@@ -118,3 +118,13 @@ body {
 .dark-mode .new-folder-btn {
   color: #fff;
 }
+
+.cards-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 2em;
+}
+
+.headers-container {
+  display: flex;
+}

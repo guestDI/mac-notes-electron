@@ -9,14 +9,12 @@ import NoteItem from './components/noteItem/noteItem.jsx';
 import { NotesContext } from './context/NotesContext.jsx';
 import Modal from './components/modal/modal.jsx';
 import { AppContext } from './context/AppContext.jsx';
+import NoteCard from './components/noteCard/note-card.jsx';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notes1, setNotes] = useState([]);
   const [noteContent, setNoteContent] = useState('');
   const [darkMode, setDarkMode] = useState(false);
-
-  const shareButtonRef = useRef(null);
 
   const {
     notes,
@@ -38,13 +36,11 @@ function App() {
     toggleView
   } = use(AppContext);
 
-  console.log('aa',view)
-
   // Load notes from localStorage on startup
-  useEffect(() => {
-    const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
-    setNotes(savedNotes);
-  }, []);
+  // useEffect(() => {
+  //   const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+  //   setNotes(savedNotes);
+  // }, []);
 
   // Save notes to localStorage whenever they change
   useEffect(() => {
@@ -117,6 +113,8 @@ function App() {
     addFolder(name)
   }, [addFolder])
 
+  const isListView = view === 'list'
+
   return (
     <>
       <div className={`container-fluid ${darkMode ? 'dark-mode' : ''}`}>
@@ -142,7 +140,7 @@ function App() {
           </div>
 
           {/* Notes Sidebar */}
-          <div className={`col-md-2 sidebar px-0 ${darkMode ? 'dark-mode' : ''}`}>
+          {isListView && <div className={`col-md-2 sidebar px-0 ${darkMode ? 'dark-mode' : ''}`}>
             <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
               <div className="flex-row">
                 <button className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`} onClick={toggleView}>
@@ -159,21 +157,35 @@ function App() {
                           deleteNote={deleteNote} darkMode={darkMode} />
               ))}
             </ul>
-          </div>
+          </div>}
 
           {/* Main Content */}
-          <div className="col-md-8 px-0">
+          <div className={`${isListView ? 'col-md-8' : 'col-md-10'}  px-0`}>
+            <div className='headers-container'>
+            {
+              !isListView && <header style={{width: '15%'}} className={`header ${darkMode ? 'dark-mode' : ''}`}>
+                <div className="flex-row">
+                  <button className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`} onClick={toggleView}>
+                    <FaListUl />
+                  </button>
+                  <button className={`btn header-button ${view === 'list' ? 'secondary' : ''}`} onClick={toggleView}>
+                    <FaBorderAll />
+                  </button>
+                </div>
+              </header>
+            }
             <Header addNewNote={addNote} shareNote={handleShare} toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
-            {view === 'list' ?
-            <>
-              {activeNote ? (
-                <textarea
-                  className={`form-control mt-3 shadow-none ${darkMode ? 'dark-mode' : ''}`}
-                  rows="20"
-                  value={getActiveNoteContent()}
-                  onChange={(e) => {
-                    setNoteContent(e.target.value);
-                    updateNote(activeNote, e.target.value);
+            </div>
+            {isListView ?
+              <>
+                {activeNote ? (
+                  <textarea
+                    className={`form-control mt-3 shadow-none ${darkMode ? 'dark-mode' : ''}`}
+                    rows="20"
+                    value={getActiveNoteContent()}
+                    onChange={(e) => {
+                      setNoteContent(e.target.value);
+                      updateNote(activeNote, e.target.value);
                   }}
                 />
               ) : (
@@ -181,8 +193,11 @@ function App() {
                   className={`text-center mt-5 ${darkMode ? 'dark-mode' : ''}`}
                 ></div>
               )}
-            </> : <div>
-                Grid
+            </> : <div className='cards-container'>
+                {notes.map((note) => (
+                  <NoteCard key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
+                            deleteNote={deleteNote} darkMode={darkMode} />
+                ))}
               </div>
             }
           </div>
