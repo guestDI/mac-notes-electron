@@ -49,3 +49,20 @@
   background: var(--bg-header);
   border-bottom: var(--bg-header);
 }
+
+.header-search {
+  width: 80%;
+  margin: 10px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #ccc;
+  font-size: 0.8em;
+}
+
+.dark-mode .header-search {
+  width: 80%;
+  margin: 10px 0;
+  border-radius: 4px;
+  background: var(--bg-header);
+  border-color: var(--bg-header);
+}

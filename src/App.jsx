@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback, use, useRef } from 'react';
+import { useState, useEffect, useCallback, use } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/header/header.jsx';
 import Folder from './components/folder/folder.jsx';
-import { FaBorderAll, FaFolder, FaListUl } from 'react-icons/fa';
+import { FaBorderAll, FaFolder, FaListUl, FaTrashAlt } from 'react-icons/fa';
 import { FaPlusCircle } from "react-icons/fa";
-import NoteItem from './components/noteItem/noteItem.jsx';
+import NoteItem from './components/noteItem/note-item.jsx';
 import { NotesContext } from './context/NotesContext.jsx';
 import Modal from './components/modal/modal.jsx';
 import { AppContext } from './context/AppContext.jsx';
@@ -13,7 +13,6 @@ import NoteCard from './components/noteCard/note-card.jsx';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [noteContent, setNoteContent] = useState('');
   const [darkMode, setDarkMode] = useState(false);
 
   const {
@@ -93,12 +92,16 @@ function App() {
 
   const handleNoteClick = (id) => {
     setActiveNoteById(id);
-    // setNoteContent(note.content);
   };
 
   const handleFolderClick = (id) => {
     setActiveFolderById(id)
   };
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    deleteNote(activeNote)
+  }
 
   const handleShare = useCallback(() => {
     // Use the exposed Electron API to trigger the sharing menu
@@ -150,11 +153,17 @@ function App() {
                   <FaBorderAll />
                 </button>
               </div>
+              <button
+                className="btn btn-sm float-end delete-btn"
+                onClick={handleDelete}
+              >
+                <FaTrashAlt />
+              </button>
             </header>
             <ul className="list-group list-unstyled mt-3 mx-2">
               {notes.map((note) => (
                 <NoteItem key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
-                          deleteNote={deleteNote} darkMode={darkMode} />
+                           darkMode={darkMode} />
               ))}
             </ul>
           </div>}
@@ -163,7 +172,7 @@ function App() {
           <div className={`${isListView ? 'col-md-8' : 'col-md-10'}  px-0`}>
             <div className='headers-container'>
             {
-              !isListView && <header style={{width: '15%'}} className={`header ${darkMode ? 'dark-mode' : ''}`}>
+              !isListView && <header style={{ width: '25%' }} className={`header ${darkMode ? 'dark-mode' : ''}`}>
                 <div className="flex-row">
                   <button className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`} onClick={toggleView}>
                     <FaListUl />
@@ -172,9 +181,16 @@ function App() {
                     <FaBorderAll />
                   </button>
                 </div>
+                <button
+                  className="btn btn-sm float-end delete-btn"
+                  onClick={handleDelete}
+                >
+                  <FaTrashAlt />
+                </button>
               </header>
             }
-            <Header addNewNote={addNote} shareNote={handleShare} toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+              <Header addNewNote={addNote} shareNote={handleShare} toggleDarkMode={toggleDarkMode}
+                      darkMode={darkMode} />
             </div>
             {isListView ?
               <>
@@ -184,7 +200,6 @@ function App() {
                     rows="20"
                     value={getActiveNoteContent()}
                     onChange={(e) => {
-                      setNoteContent(e.target.value);
                       updateNote(activeNote, e.target.value);
                   }}
                 />
@@ -196,7 +211,7 @@ function App() {
             </> : <div className='cards-container'>
                 {notes.map((note) => (
                   <NoteCard key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
-                            deleteNote={deleteNote} darkMode={darkMode} />
+                            darkMode={darkMode} />
                 ))}
               </div>
             }

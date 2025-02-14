@@ -1,4 +1,5 @@
-import { contextBridge, ipcRenderer } from 'electron';
+// eslint-disable-next-line no-undef
+const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electron', {
     saveNote: (note) => ipcRenderer.send('save-note', note),
     loadNotes: (callback) => ipcRenderer.on('load-notes', (_, notes) => callback(notes)),

@@ -1,16 +1,14 @@
 .note-item {
     padding: 0.5em;
-    margin-bottom: 0.7em;
     border-radius: 0.5em;
     font-size: 0.8em;
+    height: 7em;
+    border: 1px solid rgba(250, 176, 126, 0.42);
 }
 
 .note-item.active {
     background: var(--main-color);
-    color: #fff;
-}
-
-.note-item.active > .delete-btn > svg {
+    border: none;
     color: #fff;
 }
 

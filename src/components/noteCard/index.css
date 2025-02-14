@@ -4,4 +4,17 @@
     box-shadow: 7px 6px 22px -5px rgba(0,0,0,0.5);
     -webkit-box-shadow: 7px 6px 22px -5px rgba(0,0,0,0.5);
     -moz-box-shadow: 7px 6px 22px -5px rgba(0,0,0,0.5);
+    padding: 0.5em;
+}
+
+.note-card--title {
+    font-size: 0.7em;
+}
+
+.note-card--content {
+    font-size: 0.6em;
+}
+
+.note-card.active {
+    border: 2px solid var(--main-color);
 }

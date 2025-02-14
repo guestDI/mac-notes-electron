@@ -12,14 +12,22 @@ function createWindow () {
         width: 1200,
         height: 800,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, '../electron/preload.js'),
             nodeIntegration: false,
-            contextIsolation: true
+            contextIsolation: true,
+            enableRemoteModule: false,
         }
     });
 
-    mainWindow.loadURL('http://localhost:5173');
+    // mainWindow.loadURL(
+    //   // eslint-disable-next-line no-undef
+    //   process.env.NODE_ENV === 'development'
+    //     ? 'http://localhost:5173'
+    //     : `file://${path.join(__dirname, '../dist/index.html')}`
+    // );
 
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    mainWindow.webContents.openDevTools();
     const shareMenu = new ShareMenu({
         text: 'Check out this awesome app!',
         url: 'https://www.electronjs.org/',
