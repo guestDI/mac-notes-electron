@@ -13,23 +13,25 @@ const AppProvider = ({ children }) => {
   }, []);
 
   const toggleDarkMode = () => {
-    setDarkMode((prevState) => !prevState)
-  }
+    setDarkMode((prevState) => !prevState);
+  };
 
   const toggleView = () => {
-    setView((prevState) => prevState === 'list' ? 'grid' : 'list')
-  }
+    setView((prevState) => (prevState === 'list' ? 'grid' : 'list'));
+  };
 
   return (
-    <AppContext value={{
-      darkMode,
-      view,
-      toggleDarkMode,
-      toggleView
-    }}>
+    <AppContext
+      value={{
+        darkMode,
+        view,
+        toggleDarkMode,
+        toggleView,
+      }}
+    >
       {children}
     </AppContext>
-  )
-}
+  );
+};
 
 export { AppContext, AppProvider };

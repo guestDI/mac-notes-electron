@@ -78,20 +78,16 @@ const NotesProvider = ({ children }) => {
     const newFolder = {
       id: v4(),
       name: folderName,
-      count: 0
-    }
-    setFolders((prevState) => [...prevState, newFolder])
-    setActiveFolder(newFolder.id)
-  }
+      count: 0,
+    };
+    setFolders((prevState) => [...prevState, newFolder]);
+    setActiveFolder(newFolder.id);
+  };
 
   const setActiveFolderById = (id) => {
     const folder = folders.find((folder) => folder.id === id);
     setActiveFolder(folder ? id : null);
   };
-
-  const getNotesInFolder = (id) => {
-
-  }
 
   return (
     <NotesContext
@@ -107,15 +103,13 @@ const NotesProvider = ({ children }) => {
         getActiveNoteDrawing,
         addFolder,
         setActiveFolderById,
-        activeFolder
+        activeFolder,
       }}
     >
       {children}
     </NotesContext>
   );
 };
-
-
 
 // export const useNotes = () => useContext(NotesContext);
 export { NotesContext, NotesProvider };

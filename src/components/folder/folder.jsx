@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { FaRegFolderOpen } from 'react-icons/fa';
 import './folder.css';
 
-const Folder = ({folder, darkMode, isActive, handleFolderClick}) => {
+const Folder = ({ folder, darkMode, isActive, handleFolderClick }) => {
   const handleClick = () => {
-    handleFolderClick(folder.id)
-  }
+    handleFolderClick(folder.id);
+  };
 
   return (
     <li
@@ -17,8 +17,8 @@ const Folder = ({folder, darkMode, isActive, handleFolderClick}) => {
     >
       <FaRegFolderOpen /> {folder.name} ({folder.count})
     </li>
-  )
-}
+  );
+};
 
 Folder.propTypes = {
   folder: PropTypes.shape({
@@ -28,7 +28,7 @@ Folder.propTypes = {
   }).isRequired,
   darkMode: PropTypes.bool.isRequired,
   isActive: PropTypes.bool.isRequired,
-  handleFolderClick: PropTypes.func.isRequired
+  handleFolderClick: PropTypes.func.isRequired,
 };
 
-export default Folder
+export default Folder;

@@ -1,28 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'
+import './index.css';
 
 const Modal = ({ onClose, onConfirm, darkMode }) => {
   const [folderName, setFolderName] = useState('New Folder');
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
 
   const handleConfirm = () => {
     if (folderName.trim()) {
-      console.log('fol', folderName)
+      console.log('fol', folderName);
       onConfirm(folderName);
       onClose();
     }
   };
 
   useEffect(() => {
-    inputRef?.current?.focus()
-  }, [])
+    inputRef?.current?.focus();
+  }, []);
 
   return ReactDOM.createPortal(
-    <div className='overlay'>
+    <div className="overlay">
       <div className={`modal-container ${darkMode ? 'dark-mode' : ''}`}>
-        <p className='c-modal-title'>New Folder</p>
-        <div className='c-input-container'>
+        <p className="c-modal-title">New Folder</p>
+        <div className="c-input-container">
           <label>Name:</label>
           <input
             ref={inputRef}
@@ -37,7 +37,7 @@ const Modal = ({ onClose, onConfirm, darkMode }) => {
           <button onClick={onClose} className="c-btn cancel-btn">
             Cancel
           </button>
-          <button onClick={handleConfirm} className='c-btn confirm-btn'>
+          <button onClick={handleConfirm} className="c-btn confirm-btn">
             OK
           </button>
         </div>

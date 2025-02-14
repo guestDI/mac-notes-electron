@@ -10,17 +10,13 @@ const Header = ({ addNewNote, toggleDarkMode, darkMode, shareNote }) => {
           <FaEdit />
         </button>
       </div>
-      <div className="header-center">
-      </div>
+      <div className="header-center"></div>
       <div className="header-right">
         <button className="header-button" onClick={shareNote}>
           <FaRegShareSquare />
         </button>
         <input type="text" className="header-search" placeholder="Search" />
-        <button
-          className="header-button"
-          onClick={toggleDarkMode}
-        >
+        <button className="header-button" onClick={toggleDarkMode}>
           {darkMode ? <FaSun /> : <FaRegMoon />}{' '}
         </button>
       </div>
@@ -32,7 +28,7 @@ Header.propTypes = {
   addNewNote: PropTypes.func.isRequired,
   toggleDarkMode: PropTypes.func.isRequired,
   shareNote: PropTypes.func.isRequired,
-  darkMode: PropTypes.bool.isRequired
+  darkMode: PropTypes.bool.isRequired,
 };
 
 export default Header;

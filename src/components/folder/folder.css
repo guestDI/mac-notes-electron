@@ -1,27 +1,28 @@
 .list-folder-item {
-    cursor: pointer;
-    font-size: 0.8em;
-    margin-bottom: 0.4em;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-bottom: 0.4em;
 }
 
 .list-folder-item > svg {
-    color: var(--main-color);
-    margin-right: 0.4em;
+  color: var(--main-color);
+  margin-right: 0.4em;
 }
 
-.list-folder-item.active, .dark-mode.list-folder-item.active {
-    background: var(--main-color);
-    color: #fff;
-    padding: 0.2em 0.4em;
-    border-radius: 0.5em;
+.list-folder-item.active,
+.dark-mode.list-folder-item.active {
+  background: var(--main-color);
+  color: #fff;
+  padding: 0.2em 0.4em;
+  border-radius: 0.5em;
 }
 
 .list-folder-item.active > svg {
-    color: #fff;
+  color: #fff;
 }
 
 .dark-mode .list-folder-item {
-    background-color: #1e1e1e;
-    color: #ffffff;
-    border-color: #333;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #333;
 }

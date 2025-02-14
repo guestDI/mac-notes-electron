@@ -4,7 +4,7 @@ import './App.css';
 import Header from './components/header/header.jsx';
 import Folder from './components/folder/folder.jsx';
 import { FaBorderAll, FaFolder, FaListUl, FaTrashAlt } from 'react-icons/fa';
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle } from 'react-icons/fa';
 import NoteItem from './components/noteItem/note-item.jsx';
 import { NotesContext } from './context/NotesContext.jsx';
 import Modal from './components/modal/modal.jsx';
@@ -30,10 +30,7 @@ function App() {
     // getActiveNoteDrawing,
   } = use(NotesContext);
 
-  const {
-    view,
-    toggleView
-  } = use(AppContext);
+  const { view, toggleView } = use(AppContext);
 
   // Load notes from localStorage on startup
   // useEffect(() => {
@@ -88,20 +85,20 @@ function App() {
   // move it to context later
   const toggleDarkMode = useCallback(() => {
     setDarkMode(!darkMode);
-  }, [darkMode]) ;
+  }, [darkMode]);
 
   const handleNoteClick = (id) => {
     setActiveNoteById(id);
   };
 
   const handleFolderClick = (id) => {
-    setActiveFolderById(id)
+    setActiveFolderById(id);
   };
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    deleteNote(activeNote)
-  }
+    deleteNote(activeNote);
+  };
 
   const handleShare = useCallback(() => {
     // Use the exposed Electron API to trigger the sharing menu
@@ -110,20 +107,25 @@ function App() {
     } else {
       alert('Sharing is not supported in this environment.');
     }
-  }, []) ;
+  }, []);
 
-  const handleAddFolder = useCallback((name) => {
-    addFolder(name)
-  }, [addFolder])
+  const handleAddFolder = useCallback(
+    (name) => {
+      addFolder(name);
+    },
+    [addFolder]
+  );
 
-  const isListView = view === 'list'
+  const isListView = view === 'list';
 
   return (
     <>
       <div className={`container-fluid ${darkMode ? 'dark-mode' : ''}`}>
         <div className="row">
           {/* Folders Sidebar */}
-          <div className={`col-md-2 sidebar folders-sidebar ${darkMode ? 'dark-mode' : ''}`}>
+          <div
+            className={`col-md-2 sidebar folders-sidebar ${darkMode ? 'dark-mode' : ''}`}
+          >
             <div>
               <button className="btn folder-btn">
                 <FaFolder />
@@ -131,53 +133,42 @@ function App() {
               <div>
                 <ul className="list-group folder-group mt-3">
                   {folders.map((folder) => (
-                    <Folder key={folder.id} folder={folder} isActive={folder.id === activeFolder}
-                            darkMode={darkMode} handleFolderClick={handleFolderClick}/>
+                    <Folder
+                      key={folder.id}
+                      folder={folder}
+                      isActive={folder.id === activeFolder}
+                      darkMode={darkMode}
+                      handleFolderClick={handleFolderClick}
+                    />
                   ))}
                 </ul>
               </div>
             </div>
-            <button className={'btn new-folder-btn'} onClick={() => setIsModalOpen(true)}>
+            <button
+              className={'btn new-folder-btn'}
+              onClick={() => setIsModalOpen(true)}
+            >
               <FaPlusCircle /> New folder
             </button>
           </div>
 
           {/* Notes Sidebar */}
-          {isListView && <div className={`col-md-2 sidebar px-0 ${darkMode ? 'dark-mode' : ''}`}>
-            <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
-              <div className="flex-row">
-                <button className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`} onClick={toggleView}>
-                  <FaListUl />
-                </button>
-                <button className={`btn header-button ${view === 'list' ? 'secondary' : ''}`} onClick={toggleView}>
-                  <FaBorderAll />
-                </button>
-              </div>
-              <button
-                className="btn btn-sm float-end delete-btn"
-                onClick={handleDelete}
-              >
-                <FaTrashAlt />
-              </button>
-            </header>
-            <ul className="list-group list-unstyled mt-3 mx-2">
-              {notes.map((note) => (
-                <NoteItem key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
-                           darkMode={darkMode} />
-              ))}
-            </ul>
-          </div>}
-
-          {/* Main Content */}
-          <div className={`${isListView ? 'col-md-8' : 'col-md-10'}  px-0`}>
-            <div className='headers-container'>
-            {
-              !isListView && <header style={{ width: '25%' }} className={`header ${darkMode ? 'dark-mode' : ''}`}>
+          {isListView && (
+            <div
+              className={`col-md-2 sidebar px-0 ${darkMode ? 'dark-mode' : ''}`}
+            >
+              <header className={`header ${darkMode ? 'dark-mode' : ''}`}>
                 <div className="flex-row">
-                  <button className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`} onClick={toggleView}>
+                  <button
+                    className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`}
+                    onClick={toggleView}
+                  >
                     <FaListUl />
                   </button>
-                  <button className={`btn header-button ${view === 'list' ? 'secondary' : ''}`} onClick={toggleView}>
+                  <button
+                    className={`btn header-button ${view === 'list' ? 'secondary' : ''}`}
+                    onClick={toggleView}
+                  >
                     <FaBorderAll />
                   </button>
                 </div>
@@ -188,11 +179,58 @@ function App() {
                   <FaTrashAlt />
                 </button>
               </header>
-            }
-              <Header addNewNote={addNote} shareNote={handleShare} toggleDarkMode={toggleDarkMode}
-                      darkMode={darkMode} />
+              <ul className="list-group list-unstyled mt-3 mx-2">
+                {notes.map((note) => (
+                  <NoteItem
+                    key={note.id}
+                    isActive={note.id === activeNote}
+                    note={note}
+                    handleNoteClick={handleNoteClick}
+                    darkMode={darkMode}
+                  />
+                ))}
+              </ul>
             </div>
-            {isListView ?
+          )}
+
+          {/* Main Content */}
+          <div className={`${isListView ? 'col-md-8' : 'col-md-10'}  px-0`}>
+            <div className="headers-container">
+              {!isListView && (
+                <header
+                  style={{ width: '25%' }}
+                  className={`header ${darkMode ? 'dark-mode' : ''}`}
+                >
+                  <div className="flex-row">
+                    <button
+                      className={`btn header-button ${view === 'grid' ? 'secondary' : ''}`}
+                      onClick={toggleView}
+                    >
+                      <FaListUl />
+                    </button>
+                    <button
+                      className={`btn header-button ${view === 'list' ? 'secondary' : ''}`}
+                      onClick={toggleView}
+                    >
+                      <FaBorderAll />
+                    </button>
+                  </div>
+                  <button
+                    className="btn btn-sm float-end delete-btn"
+                    onClick={handleDelete}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </header>
+              )}
+              <Header
+                addNewNote={addNote}
+                shareNote={handleShare}
+                toggleDarkMode={toggleDarkMode}
+                darkMode={darkMode}
+              />
+            </div>
+            {isListView ? (
               <>
                 {activeNote ? (
                   <textarea
@@ -201,20 +239,27 @@ function App() {
                     value={getActiveNoteContent()}
                     onChange={(e) => {
                       updateNote(activeNote, e.target.value);
-                  }}
-                />
-              ) : (
-                <div
-                  className={`text-center mt-5 ${darkMode ? 'dark-mode' : ''}`}
-                ></div>
-              )}
-            </> : <div className='cards-container'>
+                    }}
+                  />
+                ) : (
+                  <div
+                    className={`text-center mt-5 ${darkMode ? 'dark-mode' : ''}`}
+                  ></div>
+                )}
+              </>
+            ) : (
+              <div className="cards-container">
                 {notes.map((note) => (
-                  <NoteCard key={note.id} isActive={note.id === activeNote} note={note} handleNoteClick={handleNoteClick}
-                            darkMode={darkMode} />
+                  <NoteCard
+                    key={note.id}
+                    isActive={note.id === activeNote}
+                    note={note}
+                    handleNoteClick={handleNoteClick}
+                    darkMode={darkMode}
+                  />
                 ))}
               </div>
-            }
+            )}
           </div>
         </div>
 

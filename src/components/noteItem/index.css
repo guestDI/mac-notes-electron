@@ -1,21 +1,21 @@
 .note-item {
-    padding: 0.5em;
-    border-radius: 0.5em;
-    font-size: 0.8em;
-    height: 7em;
-    border: 1px solid rgba(250, 176, 126, 0.42);
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+  height: 7em;
+  border: 1px solid rgba(250, 176, 126, 0.42);
 }
 
 .note-item.active {
-    background: var(--main-color);
-    border: none;
-    color: #fff;
+  background: var(--main-color);
+  border: none;
+  color: #fff;
 }
 
 .delete-btn > svg {
-    color: var(--main-color);
+  color: var(--main-color);
 }
 
 .delete-btn > svg:hover {
-    color: var(--main-color-light);
+  color: var(--main-color-light);
 }

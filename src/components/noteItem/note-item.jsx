@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import './index.css'
+import './index.css';
 
-const NoteItem = ({ note, handleNoteClick, isActive, darkMode}) => {
+const NoteItem = ({ note, handleNoteClick, isActive, darkMode }) => {
   const handleClick = () => {
-    handleNoteClick(note.id)
-  }
+    handleNoteClick(note.id);
+  };
 
   return (
     <>
@@ -18,8 +18,8 @@ const NoteItem = ({ note, handleNoteClick, isActive, darkMode}) => {
         {note.content ? <div>{note.content}</div> : <div>{note.title}</div>}
       </li>
     </>
-  )
-}
+  );
+};
 
 NoteItem.propTypes = {
   note: PropTypes.shape({
@@ -29,7 +29,7 @@ NoteItem.propTypes = {
   }).isRequired,
   handleNoteClick: PropTypes.func.isRequired,
   darkMode: PropTypes.bool.isRequired,
-  isActive: PropTypes.bool.isRequired
+  isActive: PropTypes.bool.isRequired,
 };
 
-export default NoteItem
+export default NoteItem;
