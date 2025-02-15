@@ -32,55 +32,10 @@ function App() {
 
   const { view, toggleView } = use(AppContext);
 
-  // Load notes from localStorage on startup
-  // useEffect(() => {
-  //   const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
-  //   setNotes(savedNotes);
-  // }, []);
-
   // Save notes to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
-
-  useEffect(() => {
-    // ipcRenderer.on('share-via-airdrop', () => {
-    //   const note = notes.find((note) => note.id === activeNote);
-    //   if (note) {
-    //     const filePath = `/path/to/save/note_${note.id}.txt`; // Save note to a file
-    //     const content = `Title: ${note.title}\n\n${note.content}`;
-    //     require('fs').writeFileSync(filePath, content);
-    //
-    //     const command = `osascript -e 'tell application "Finder" to reveal POSIX file "${filePath}"' -e 'tell application "Finder" to activate'`;
-    //     exec(command, (error) => {
-    //       if (error) {
-    //         console.error('Error sharing via AirDrop:', error);
-    //       }
-    //     });
-    //   }
-    // });
-
-    // ipcRenderer.on('share-via-email', () => {
-    //   const note = notes.find((note) => note.id === activeNote);
-    //   if (note) {
-    //     const filePath = `/path/to/save/note_${note.id}.txt`; // Save note to a file
-    //     const content = `Title: ${note.title}\n\n${note.content}`;
-    //     require('fs').writeFileSync(filePath, content);
-    //
-    //     const mailtoUrl = `mailto:?subject=${encodeURIComponent(
-    //       'Check out this note!'
-    //     )}&body=${encodeURIComponent(content)}&attachment=${encodeURIComponent(filePath)}`;
-    //     shell.openExternal(mailtoUrl).catch((err) => {
-    //       console.error('Error opening email client:', err);
-    //     });
-    //   }
-    // });
-
-    return () => {
-      // ipcRenderer.removeAllListeners('share-via-airdrop');
-      // ipcRenderer.removeAllListeners('share-via-email');
-    };
-  }, [notes, activeNote]);
 
   // move it to context later
   const toggleDarkMode = useCallback(() => {

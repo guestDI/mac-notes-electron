@@ -13,7 +13,7 @@ const NotesContext = createContext(null);
 const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
-  const [activeFolder, setActiveFolder] = useState(null);
+  const [activeFolder, setActiveFolder] = useState(1);
   const [folders, setFolders] = useState(mockedFolders);
 
   // Load notes from localStorage on startup
@@ -27,6 +27,14 @@ const NotesProvider = ({ children }) => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
+  const updateFolderCount = () => {
+    const folder = folders.find(({id}) => id === activeFolder)
+    const updatedFolders = folders.filter(folder => folder.id !== activeFolder)
+    folder.count++
+
+    setFolders([updatedFolders, ...folder])
+  }
+
   // Add a new note
   const addNote = () => {
     const newNote = {
@@ -34,9 +42,11 @@ const NotesProvider = ({ children }) => {
       title: 'New Note',
       content: '',
       drawing: null,
+      folder: activeFolder
     };
     setNotes([...notes, newNote]);
     setActiveNote(newNote.id);
+    updateFolderCount()
   };
 
   // Delete a note
