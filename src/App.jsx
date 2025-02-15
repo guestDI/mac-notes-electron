@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, use } from 'react';
+import { useState, useCallback, use } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/header/header.jsx';
@@ -10,10 +10,12 @@ import { NotesContext } from './context/NotesContext.jsx';
 import Modal from './components/modal/modal.jsx';
 import { AppContext } from './context/AppContext.jsx';
 import NoteCard from './components/noteCard/note-card.jsx';
+import Toast from './components/toast/toast.jsx';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
 
   const {
     notes,
@@ -32,15 +34,18 @@ function App() {
 
   const { view, toggleView } = use(AppContext);
 
-  // Save notes to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
+  const showToast = useCallback((message) => {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(null), 3000); // Auto-dismiss after 3 seconds
+  }, []);
 
-  // move it to context later
-  const toggleDarkMode = useCallback(() => {
-    setDarkMode(!darkMode);
-  }, [darkMode]);
+  const toggleDarkMode = useCallback(async () => {
+    if (window.electron) {
+      const isDarkMode = await window.electron.toggle()
+      setDarkMode(isDarkMode);
+      showToast(isDarkMode ? 'Theme changed to Dark' : 'Theme changed to Light')
+    }
+  }, [showToast]);
 
   const handleNoteClick = (id) => {
     setActiveNoteById(id);
@@ -75,6 +80,7 @@ function App() {
 
   return (
     <>
+      <div id="toast-root"></div>
       <div className={`container-fluid ${darkMode ? 'dark-mode' : ''}`}>
         <div className="row">
           {/* Folders Sidebar */}
@@ -224,6 +230,9 @@ function App() {
             onConfirm={handleAddFolder}
             darkMode={darkMode}
           />
+        )}
+        {toastMessage && (
+          <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
         )}
       </div>
     </>

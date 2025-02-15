@@ -27,6 +27,7 @@ const Header = ({ addNewNote, toggleDarkMode, darkMode, shareNote }) => {
 Header.propTypes = {
   addNewNote: PropTypes.func.isRequired,
   toggleDarkMode: PropTypes.func.isRequired,
+  setSystemTheme: PropTypes.func.isRequired,
   shareNote: PropTypes.func.isRequired,
   darkMode: PropTypes.bool.isRequired,
 };

@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 let mainWindow;
+let clipboard;
 
 function createWindow () {
     mainWindow = new BrowserWindow({
@@ -19,36 +20,60 @@ function createWindow () {
         }
     });
 
-    // mainWindow.loadURL(
-    //   // eslint-disable-next-line no-undef
-    //   process.env.NODE_ENV === 'development'
-    //     ? 'http://localhost:5173'
-    //     : `file://${path.join(__dirname, '../dist/index.html')}`
-    // );
-
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
     mainWindow.webContents.openDevTools();
-    const shareMenu = new ShareMenu({
-        text: 'Check out this awesome app!',
-        url: 'https://www.electronjs.org/',
-    });
 
-    // Attach the sharing menu to the app
-    Menu.setApplicationMenu(
-      Menu.buildFromTemplate([
-          {
-              label: 'Share',
-              submenu: [
-                  {
-                      label: 'Share via...',
-                      click: () => {
-                          shareMenu.popup({ window: mainWindow });
-                      },
-                  },
-              ],
-          },
-      ])
-    );
+    ipcMain.handle('dark-mode:toggle', () => {
+        if (nativeTheme.shouldUseDarkColors) {
+            nativeTheme.themeSource = 'light'
+        } else {
+            nativeTheme.themeSource = 'dark'
+        }
+        return nativeTheme.shouldUseDarkColors
+    })
+
+    ipcMain.handle('dark-mode:system', () => {
+        nativeTheme.themeSource = 'system'
+    })
+    // eslint-disable-next-line no-undef
+    if (process.platform === 'darwin') {
+        const shareMenu = new ShareMenu({
+            text: 'Check out this awesome app!',
+            url: 'https://www.electronjs.org/',
+        });
+
+        const menu = Menu.buildFromTemplate([
+            {
+                label: 'Share',
+                submenu: [
+                    {
+                        label: 'Share via...',
+                        click: () => {
+                            shareMenu.popup({ window: mainWindow });
+                        },
+                    },
+                ],
+            },
+        ]);
+        Menu.setApplicationMenu(menu);
+    } else {
+        // Fallback for unsupported platforms
+        const menu = Menu.buildFromTemplate([
+            {
+                label: 'Share',
+                submenu: [
+                    {
+                        label: 'Copy Link',
+                        click: () => {
+                            clipboard.writeText('https://www.electronjs.org/');
+                            console.log('Link copied to clipboard!');
+                        },
+                    },
+                ],
+            },
+        ]);
+        Menu.setApplicationMenu(menu);
+    }
 }
 
 const dockMenu = Menu.buildFromTemplate([
@@ -63,19 +88,6 @@ const dockMenu = Menu.buildFromTemplate([
         ]
     },
 ])
-
-ipcMain.handle('dark-mode:toggle', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-        nativeTheme.themeSource = 'light'
-    } else {
-        nativeTheme.themeSource = 'dark'
-    }
-    return nativeTheme.shouldUseDarkColors
-})
-
-ipcMain.handle('dark-mode:system', () => {
-    nativeTheme.themeSource = 'system'
-})
 
 app.whenReady().then(() => {
     // eslint-disable-next-line no-undef

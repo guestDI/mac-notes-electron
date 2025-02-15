@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "start": "electron .",
+    "start": "npm run build && electron .",
     "preview": "vite preview",
     "format": "prettier --write ./src"
   },
