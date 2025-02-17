@@ -1,4 +1,21 @@
 {
+  "build": {
+    "appId": "com.notes.clone.myapp",
+    "productName": "MacNotesConeApp",
+    "directories": {
+      "output": "release-builds"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
   "name": "mac-notes-clone",
   "private": true,
   "version": "0.0.0",
@@ -14,7 +31,6 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "electron": "^34.1.1",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -27,6 +43,7 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^34.1.1",
     "electron-builder": "^25.1.8",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
