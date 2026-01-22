@@ -27,14 +27,14 @@ const NotesProvider = ({ children }) => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  const updateFolderCount = () => {
-    const folder = folders.find(({id}) => id === activeFolder)
-    const updatedFolders = folders.filter(folder => folder.id !== activeFolder)
-    folder.count++
-
-    setFolders([updatedFolders, ...folder])
-  }
-
+  const updateFolderCount = (delta = 1, folderId = activeFolder) => {
+    setFolders((prev) =>
+      prev.map((f) =>
+        f.id === folderId ? { ...f, count: Math.max(0, (f.count || 0) + delta) } : f
+      )
+    );
+  };
+  
   // Add a new note
   const addNote = () => {
     const newNote = {
@@ -46,13 +46,17 @@ const NotesProvider = ({ children }) => {
     };
     setNotes([...notes, newNote]);
     setActiveNote(newNote.id);
-    updateFolderCount()
+    updateFolderCount(1, activeFolder);
   };
-
+  
   // Delete a note
   const deleteNote = (id) => {
+    const noteToDelete = notes.find((note) => note.id === id);
+    if (!noteToDelete) return;
+    const folderId = noteToDelete.folder;
     const updatedNotes = notes.filter((note) => note.id !== id);
     setNotes(updatedNotes);
+    updateFolderCount(-1, folderId);
     if (activeNote === id) {
       setActiveNote(null);
     }
